@@ -26,7 +26,7 @@ void ctdd_setup_signal_handler(){
 	sigaction(SIGSEGV, &sig, NULL);
 }
 
-int ctdd_results(int (*test_runner)()){
+int ctdd_test(int (*test_runner)()){
 
 	int r = test_runner();
 
