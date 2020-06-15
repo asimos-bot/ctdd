@@ -15,7 +15,7 @@ long unsigned int ctdd_sucessful_tests=0;
 
 void ctdd_signal_handler(int signum){
 
-	printf("\x1b[31mfailure\x1b[0m - %d tests ran sucessfully\n", ctdd_sucessful_tests);
+	printf("\x1b[31mfailure\x1b[0m (\x1b[31mSIGSEGV\x1b[0m) - %d tests ran sucessfully\n", ctdd_sucessful_tests);
 	exit(1);
 }
 
