@@ -21,7 +21,7 @@ void ctdd_signal_handler(int signum){
 
 void ctdd_setup_signal_handler(){
 
-	struct sigaction sig;
+	struct sigaction sig={0};
 	sig.sa_handler = ctdd_signal_handler;
 	sigaction(SIGSEGV, &sig, NULL);
 }
