@@ -1,2 +1,2 @@
 # ctdd
-minimalistic C test driven framework written entirely in the preprocessor
+minimalistic C test driven developement framework written entirely in the preprocessor
