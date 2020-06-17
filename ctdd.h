@@ -35,7 +35,7 @@ int ctdd_test(int (*test_runner)()){
 		printf("\x1b[31mfailure\x1b[0m - %lu tests ran sucessfully\n", ctdd_sucessful_tests);
 	} else {
 
-		printf("\x1b[32msucess\x1b[0m - all the %lu tests ran sucessfully\n", ctdd_sucessful_tests);
+		printf("\x1b[32msucess\x1b[0m - all %lu tests ran sucessfully\n", ctdd_sucessful_tests);
 	}
 
 	return r;
