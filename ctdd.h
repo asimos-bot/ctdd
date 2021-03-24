@@ -1,6 +1,8 @@
 #ifndef CTDD_H
 #define CTDD_H
 
+#define _POSIX_C_SOURCE 199309L
+
 #include <stdio.h>
 #include <signal.h>
 #include <stdlib.h>
@@ -15,7 +17,7 @@ long unsigned int ctdd_sucessful_tests=0;
 
 void ctdd_signal_handler(int signum){
 
-	printf("\x1b[31mfailure\x1b[0m (\x1b[31mSIGSEGV\x1b[0m) - %d tests ran sucessfully\n", ctdd_sucessful_tests);
+	printf("\x1b[31mfailure\x1b[0m(%d) (\x1b[31mSIGSEGV\x1b[0m) - %lu tests ran sucessfully\n", signum, ctdd_sucessful_tests);
 	exit(1);
 }
 
