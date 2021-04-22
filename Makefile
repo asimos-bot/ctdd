@@ -1,4 +1,4 @@
-CC := gcc
+CC := clang
 
 object_files = $(addsuffix .o, $(basename $(wildcard list*.c)))
 

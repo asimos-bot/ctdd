@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <signal.h>
 #include <stdlib.h>
+#include <string.h>
 
 long unsigned int ctdd_sucessful_tests=0;
 
@@ -23,7 +24,8 @@ void ctdd_signal_handler(int signum){
 
 void ctdd_setup_signal_handler(){
 
-	struct sigaction sig={0};
+	struct sigaction sig;
+	memset(&sig, 0x00, sizeof(sig)); 
 	sig.sa_handler = ctdd_signal_handler;
 	sigaction(SIGSEGV, &sig, NULL);
 }
