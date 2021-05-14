@@ -18,15 +18,20 @@ char quiet=0;
 
 #define ctdd_verify(test)\
     do {\
-        time_t t = time(NULL);\
+        struct timespec start;\
+        struct timespec end;\
+        if(!quiet) clock_gettime(CLOCK_REALTIME, &start);\
         int r=test();\
-        t = time(NULL) - t;\
+        if(!quiet) clock_gettime(CLOCK_REALTIME, &end);\
         if(r) {\
             return r;\
         } else {\
             ctdd_sucessful_tests++;\
             if(!quiet)\
-                    fprintf(stderr, "\x1b[32msuccess\x1b[0m - test #%lu (" #test ") in at least %lds\n", ctdd_sucessful_tests, t);\
+                    end.tv_sec -= start.tv_sec;\
+                    end.tv_nsec -= start.tv_nsec;\
+                    if(end.tv_nsec < 0) end.tv_nsec += 1000000000;\
+                    fprintf(stderr, "\x1b[32msuccess\x1b[0m - test #%lu (" #test ") in %ld.%03ld\n", ctdd_sucessful_tests, end.tv_sec, (long)(end.tv_nsec/1.0e6));\
         }\
     } while(0)
 
