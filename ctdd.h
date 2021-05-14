@@ -31,7 +31,7 @@ char quiet=0;
                     end.tv_sec -= start.tv_sec;\
                     end.tv_nsec -= start.tv_nsec;\
                     if(end.tv_nsec < 0) end.tv_nsec += 1000000000;\
-                    fprintf(stderr, "\x1b[32msuccess\x1b[0m - test #%lu (" #test ") in %ld.%03ld\n", ctdd_sucessful_tests, end.tv_sec, (long)(end.tv_nsec/1.0e6));\
+                    fprintf(stderr, "\x1b[32msuccess\x1b[0m - test #%lu (" #test ") in %ld.%03lds\n", ctdd_sucessful_tests, end.tv_sec, (long)(end.tv_nsec/1.0e6));\
         }\
     } while(0)
 
@@ -55,14 +55,25 @@ void ctdd_set_quiet() {
 
 int ctdd_test(int (*test_runner)()){
 
+    struct timespec start;
+    struct timespec end;
+
+    clock_gettime(CLOCK_REALTIME, &start);
+
 	int r = test_runner();
 
-	if( r ){
+    clock_gettime(CLOCK_REALTIME, &end);
+    end.tv_sec -= start.tv_sec;
+    end.tv_nsec -= start.tv_nsec;
+    if(end.tv_nsec < 0) end.tv_nsec += 1000000000;
+    long mili = end.tv_nsec/1.0e6;
+
+    if( r ){
 	
-		printf("\x1b[31mfailure\x1b[0m - %lu tests ran sucessfully\n", ctdd_sucessful_tests);
+		printf("\x1b[31mfailure\x1b[0m - %lu tests ran sucessfully in %ld.%03lds\n", ctdd_sucessful_tests, end.tv_sec, mili);
 	} else {
 
-		printf("\x1b[32msuccess\x1b[0m - all %lu tests ran sucessfully\n", ctdd_sucessful_tests);
+		printf("\x1b[32msuccess\x1b[0m - all %lu tests ran sucessfully in %ld.%03lds\n", ctdd_sucessful_tests, end.tv_sec, mili);
 	}
 
 	return r;
